@@ -2,7 +2,7 @@
 
 {% block contnet %}
 <form method="post">
-    {% crsf_token %}
+    {% csrf_token %}
     {{ forms.as_p }}
     <input type = "submit" value="signup">
 </form>

@@ -23,7 +23,7 @@ def sign_up(request):
 
 
 def sign_in(request):
-    form = LogIn(data=request.Post or None)
+    form = LogIn(data=request.POST or None)
     if request.method == "POST" and form.is_valid():
         user = authenticate(
             username=form.cleaned_data.get("username"),
