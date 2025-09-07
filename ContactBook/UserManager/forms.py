@@ -10,5 +10,5 @@ class SignUp(UserCreationForm):
 
 
 class LogIn(AuthenticationForm):
-    username = forms.CharField(label="login"),
+    username = forms.CharField(label="login", max_length=150),
     passord = forms.CharField(label="passord", widget=forms.PasswordInput),
