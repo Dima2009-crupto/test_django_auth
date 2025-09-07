@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block contnet %}
+<h1>Username: {{ requests.user.username}}</h1>
+<h2>First_nme: {{ requests.user.first_name }}</h2>
+<h2>Last_name: {{ requests.user.last_name }}</h2>
+{% endblock content %}
