@@ -27,13 +27,13 @@ def sign_in(request):
     if request.user.is_authenticated:
         return redirect("index")
     
-
     form = LogIn(data=request.POST or None)
     if request.method == "POST" and form.is_valid():
         user = authenticate(
             username=form.cleaned_data.get("usernsme"),
             password=form.cleaned_data.get("password"),
         )
+
         if user:
             login(request=request, user = user )
             messages.add_message(request=request, level=messages.SUCCESS, message="Ви успішно увійшли в систему")
@@ -51,7 +51,7 @@ def index(request):
 
 @login_required(login_url="/sign_in/")
 def logout_func(request):
-     #if request.method == "POST":
+    #if request.method == "POST":
          logout(request)
          messages.success(request,"Ви успішно вийшли з системи")
          return redirect("sign_in")
