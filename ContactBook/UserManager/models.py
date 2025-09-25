@@ -4,9 +4,9 @@ from django.contrib.auth.models import AbstractUser
 
 
 class MySuperUser(AbstractUser):
-    phone_number = models.CharField(max_length=20, blank=True, default=None)
-    adress = models.CharField(max_length=500, blank=True, default=None)
-    profile_picures = models.TextField( blank=True, default=None)
+    phone_number = models.CharField(max_length=20, null=True, default=None)
+    adress = models.CharField(max_length=500, null=True, default=None)
+    profile_picures = models.TextField( null=True, default=None)
 
     def __str__(self):
         return f"{self.get_full_name()}: {self.phone_number}"

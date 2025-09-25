@@ -13,10 +13,10 @@ def sign_up(request):
     if request.user.is_uthenticated:
         return redirect("index")
 
-    form = SignUp(data = request.Post or None)
+    form = SignUp(data = request.POST or None)
     if request.method == "POST" and form.is_valid():
-        users = form.save()
-        login(request=request, user=users)
+        user = form.save()
+        login(request=request, user=user)
         messages.add_message(request=request, level=messages.SUCCESS, message="Ви успішно зареєструвалися")
         return redirect("index")
     return render(request=request, template_name="sign_up.html", context={"form": form})
