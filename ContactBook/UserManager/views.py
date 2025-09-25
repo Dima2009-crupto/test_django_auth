@@ -10,7 +10,7 @@ from .forms import SignUp, LogIn
 
 
 def sign_up(request):
-    if request.user.is_uthenticated:
+    if request.user.is_authenticated:
         return redirect("index")
 
     form = SignUp(data = request.POST or None)
