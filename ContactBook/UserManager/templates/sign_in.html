@@ -1,9 +1,12 @@
 {% extends "base.html" %}
+{% block title %}Вход - ContactBook{% endblock %}
 
 {% block content %}
+<h2>Вход</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Увійти" class="btn btn-primary">
+    <button type="submit" class="btn btn-success">Войти</button>
 </form>
-{% endblock content %}
+<p class="mt-3">Нет аккаунта? <a href="{% url 'sign_up' %}">Зарегистрируйтесь</a></p>
+{% endblock %}

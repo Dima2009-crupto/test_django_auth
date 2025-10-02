@@ -1,9 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
 {% extends "base.html" %}
 
-{% block content %}
-<h1>Нікнейм: {{ request.user.username }}</h1>
-<h2>Ім'я: {{ request.user.first_name }}</h2>
-<h2>Прізвище: {{ request.user.last_name }}</h2>
-<h2>Номер телефону: {{ request.user.phone_number }}</h2>
-<h2>Адреса: {{ request.user.address }}</h2>
-{% endblock content %}
+    {% block content %}
+        <h1>Нікнейм: {{ request.user.username }}</h1>
+        <h2>Ім'я: {{ request.user.first_name }}</h2>
+        <h2>Прізвище: {{ request.user.last_name }}</h2>
+        <h2>Номер телефону: {{ request.user.phone_number }}</h2>
+        <h2>Адреса: {{ request.user.address }}</h2>
+    {% endblock content %}
+
+</body>
+</html>
