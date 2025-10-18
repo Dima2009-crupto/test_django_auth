@@ -33,6 +33,6 @@ def get_contacts(request):
 
 #@login_required
 #def delete_contact(request, id):
-   # contact = Contact.objects.filter(pk=id).first()
-   # contact.delete()
-    #return redirect("get_contacts")
+    contact = Contact.objects.filter(pk=id).first()
+    contact.delete()
+    return redirect("get_contacts")

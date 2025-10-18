@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect 
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -25,22 +25,21 @@ def sign_up(request):
 
 def sign_in(request):
     if request.user.is_authenticated:
-        return redirect("index")
-    
+         return redirect("index")
+
     form = LogIn(data=request.POST or None)
     if request.method == "POST" and form.is_valid():
         user = authenticate(
-            username=form.cleaned_data.get("usernsme"),
+            username=form.cleaned_data.get("username"),
             password=form.cleaned_data.get("password"),
         )
-
         if user:
-            login(request=request, user = user )
-            messages.add_message(request=request, level=messages.SUCCESS, message="Ви успішно увійшли в систему")
+            login(request=request, user=user)
+            messages.add_message(request=request, level=messages.SUCCESS, message="Успішний вхід!")
             return redirect("index")
         else:
-            messages.add_message(request=request, level=messages.ERROR, message="Помилка входу")
-    return render(request=request, template_name="sign_in.html", context=dict(form=form))
+            messages.add_message(request=request, level=messages.ERROR, message="Невірний логін або пароль.")
+    return render(request=request, template_name="sign_in.html", context={"form": form})
 
 
 @login_required(login_url="/sign_in/")
