@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Contact
+
 from .forms import ContactForm
+
 # Create your views here.
 
-
-@login_required(login_url="/sign_in")
+@login_required
 def add_contact(request):
     form = ContactForm()
     if request.method == "POST":
@@ -16,23 +16,51 @@ def add_contact(request):
             contact = form.save(commit=False)
             contact.user = request.user
             contact.save()
-            messages.add_message(request=request, level=messages.SUCCESS, message="Contact added successfully!")
+            messages.add_message(request=request, level=messages.SUCCESS, message="Контакт успішно додано!")
             return redirect("get_contacts")
 
     return render(request=request, template_name="add_contact.html", context=dict(form=form))
 
-
-@login_required(login_url="/sign_in")
+@login_required
 def get_contacts(request):
-    contacts = Contact.objects.filter(user=request.user).all()
+    contacts = Contacts.objects.filter(user=request.user).all()
     return render(request=request, template_name="contacts.html", context=dict(contacts=contacts))
 
 
-
-
-
-#@login_required
-#def delete_contact(request, id):
-    contact = Contact.objects.filter(pk=id).first()
+@login_required
+def delete_contact(request, id):
+    contact = Contact.objects.filter(pk=id, user=request.user).first()
     contact.delete()
+    messages.add_message(request=request, level=messages.SUCCESS, message=f"Контакт '{contact}' успішно видалено")
     return redirect("get_contacts")
+
+
+@login_required
+def edit_contact(request, id):
+    contact = Contact.objects.filter(pk=id, user=request.user).first()
+    form = ContactForm(data=request.POST or None, files=request.FILES or None, instance=contact)
+    if request.POST and form.changed_data:
+        form.save()
+        messages.add_message(request=request, message="Дані успішно оновлені", level=messages.SUCCESS)
+        return redirect("get_contacts")
+    
+    return render(request, "edit_contact.html", context=dict(form=form))
+
+
+@login_required
+def filter_contacts(request):
+    first_name = request.POST.get("first_name")
+    last_name = request.POST.get("last_name")
+    phone_number = request.POST.get("phone_number")
+    email = request.POST.get("email")
+    address = request.POST.get("address")
+
+    contacts = (Contact.objects
+                .filter(first_name__icontains=first_name) 
+                .filter(last_name__icontains=last_name)
+                .filter(phone_number__icontains=phone_number)
+                .filter(email__icontains=email)
+                .filter(address__icontains=address)
+                .filter(user=request.user)
+                .all())
+    return render(request=request, template_name="contacts.html", context=dict(contacts=contacts))
